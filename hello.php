@@ -24,4 +24,5 @@
     $word1 = 'hello';
     $word2 = "{$word1} john, {$word1} alice";
     echo $word2;
+?>
 
