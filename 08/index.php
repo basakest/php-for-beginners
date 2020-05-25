@@ -1,15 +1,5 @@
 <?php
-    $db_host = "127.0.0.1";
-    $db_name = "cms";
-    $db_user = "cms_www";
-    $db_pwd = "12345";
-
-    $dbc = mysqli_connect($db_host, $db_user, $db_pwd, $db_name);
-
-    if (mysqli_connect_errno()) {
-        echo mysqli_connect_errno();
-        exit();
-    }
+    require('./includes/database.php');
 
     $sql = "select * from article;";
     if (($result = mysqli_query($dbc, $sql)) === false) {
@@ -20,13 +10,7 @@
         //var_dump($articles);
     } 
 ?>
-<!DOCTYPE html>
-<html lang="en">
-    <head>
-        <meta charset="utf-8" />
-        <title>title</title>
-    </head>
-    <body>
+<?php require('./includes/header.php'); ?>
         <h1>articles</h1>
         <?php 
             if (empty($articles)): 
@@ -36,11 +20,10 @@
         <ul>
         <?php foreach($articles as $article): ?>
             <li>
-                <h2><?= $article['title']; ?></h2>
+                <a href="./article.php?id=<?= $article['id']?>"><h2><?= $article['title']; ?></h2></a>
                 <p><?= $article['content']; ?></p>
             </li>
         <?php endforeach; ?>
         </ul>
         <?php endif; ?>
-    </body>
-</html>
+<?php require('./includes/footer.php'); ?> 
