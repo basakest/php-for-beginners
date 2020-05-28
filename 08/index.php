@@ -1,6 +1,6 @@
 <?php
     require('./includes/database.php');
-
+    $dbc = getDB();
     $sql = "select * from article;";
     if (($result = mysqli_query($dbc, $sql)) === false) {
         echo mysqli_error($dbc);
@@ -11,6 +11,7 @@
     } 
 ?>
 <?php require('./includes/header.php'); ?>
+        <a href="./new-article.php">add article</a>
         <h1>articles</h1>
         <?php 
             if (empty($articles)): 
@@ -20,8 +21,8 @@
         <ul>
         <?php foreach($articles as $article): ?>
             <li>
-                <a href="./article.php?id=<?= $article['id']?>"><h2><?= $article['title']; ?></h2></a>
-                <p><?= $article['content']; ?></p>
+                <a href="./article.php?id=<?= $article['id']?>"><h2><?= htmlspecialchars($article['title']) ; ?></h2></a>
+                <p><?= htmlspecialchars($article['content']); ?></p>
             </li>
         <?php endforeach; ?>
         </ul>

@@ -1,6 +1,7 @@
 <?php
     require('./includes/database.php');
     if (isset($_GET['id']) && is_numeric($_GET['id'])) {
+        $dbc = getDB();
         $sql = "select * from article where id = $_GET[id];";
         if (($result = mysqli_query($dbc, $sql)) === false) {
             echo mysqli_error($dbc);
@@ -24,8 +25,8 @@
         <ul>
         
             <li>
-                <h2><?= $article['title']; ?></h2>
-                <p><?= $article['content']; ?></p>
+                <h2><?= htmlspecialchars($article['title']) ; ?></h2>
+                <p><?= htmlspecialchars($article['content']) ; ?></p>
             </li>
        
         </ul>
