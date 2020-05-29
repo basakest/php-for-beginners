@@ -1,7 +1,9 @@
 <?php
     require("./includes/header.php");
     require("./includes/database.php");
-    $errors = [];
+    require("./includes/article.php");
+    require("./includes/url.php");
+    //$errors = [];
     $title = "";
     $content = "";
     $published_at = "";
@@ -9,23 +11,7 @@
         $title = $_POST["title"];
         $content = $_POST["content"];
         $published_at = empty($_POST["published_at"])?null:$_POST["published_at"];
-        if (empty($title)) {
-            $errors[] = "please fill the title";
-        }
-        if (empty($content)) {
-            $errors[] = "please fill the content";
-        }
-        if (isset($published_at)) {
-            $published_at = date_create_from_format("Y-m-d H:i:s", $published_at);
-            if ($published_at === false) {
-                $errors[] = "invalid date and time";
-            } else {
-                $date_errors = date_get_last_errors();
-                if ($date_errors["warnning_count"] > 0) {
-                    $errors[] = "invalid date and time";
-                }
-            }
-        }
+        $errors = validateArticle($title, $content, $published_at);
         if (empty($errors)) {
             $dbc = getDB();
             $title = mysqli_escape_string($dbc, $title);
@@ -42,13 +28,7 @@
                 exit;
             } else {
                 $id = mysqli_insert_id($dbc);
-                if (isset($_SERVER["HTTPS"]) && ($_SERVER["HTTPS"] != "off")) {
-                    $protocal = "https";
-                } else {
-                    $protocal = "http";
-                }
-                $url = "$protocal://$_SERVER[HTTP_HOST]/08/article.php?id=$id";
-                header("Location: $url");
+                redirect("08/article.php?id=$id");
             }
             
             /*
@@ -69,30 +49,5 @@
         }  
     }
 ?>
-<form method="post">
-    <h1>My blog</h1>
-    <h2>New article</h2>
-    <?php if(!empty($errors)):?>
-    <ul>
-    <?php foreach($errors as $error):?>
-    <li><?= $error;?></li>
-    <?php endforeach;?>
-    </ul>
-    <?php endif;?>
-    <div>
-        <label for="title">title</label>
-        <input type="text" name="title" id="title" value="<?= htmlspecialchars($article['title']) ;?>" />
-    </div>
-    <div>
-        <label for="content">content</label>
-        <textarea name="content" id="content" cols="30" rows="10">
-            <?= htmlspecialchars($article['content']) ;?>
-        </textarea>
-    </div>
-    <div>
-        <label for="published_at">Publication date and time</label>
-        <input type="datetime-local" name="published_at" id="published_at" value="<?= $published_at;?>" />
-    </div>
-    <button>Add</button>
-</form>
-<?php require("./includes/footer.php"); ?>
+<?php require("./includes/article-form.php");?>
+<?php require("./includes/footer.php");?>

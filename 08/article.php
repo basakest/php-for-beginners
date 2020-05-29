@@ -1,15 +1,10 @@
 <?php
-    require('./includes/database.php');
-    if (isset($_GET['id']) && is_numeric($_GET['id'])) {
+    require("./includes/database.php");
+    require("./includes/article.php");
+    $id = $_GET["id"];
+    if (isset($id)) {
         $dbc = getDB();
-        $sql = "select * from article where id = $_GET[id];";
-        if (($result = mysqli_query($dbc, $sql)) === false) {
-            echo mysqli_error($dbc);
-        } else {
-            $article = mysqli_fetch_assoc($result);
-            //var_dump($result);
-            //var_dump($articles);
-        } 
+        $article = getArticle($id, $dbc);
     } else {
         $article = null;
     }
@@ -30,5 +25,7 @@
             </li>
        
         </ul>
+        <a href="./edit-article.php?id=<?=$id;?>">edit article</a>
+        <a href="./delete-article.php?id=<?=$id;?>">delete article</a>
         <?php endif; ?>
  <?php require('./includes/footer.php'); ?>       
