@@ -3,6 +3,12 @@
     require("./includes/database.php");
     require("./includes/article.php");
     require("./includes/url.php");
+    require("./includes/auth.php");
+    session_start();
+    if (!isLoggedIn()) {
+        //var_dump($_SESSION);
+        die("<a href='./login.php'>log in </a>to see this page");
+    }
     //$errors = [];
     $title = "";
     $content = "";

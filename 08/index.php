@@ -1,5 +1,7 @@
 <?php
+    session_start();
     require('./includes/database.php');
+    require("./includes/auth.php");
     $dbc = getDB();
     $sql = "select * from article;";
     if (($result = mysqli_query($dbc, $sql)) === false) {
@@ -11,7 +13,13 @@
     } 
 ?>
 <?php require('./includes/header.php'); ?>
-        <a href="./new-article.php">add article</a>
+        <?php if (isLoggedIn()):?>
+            <p>you are log in now, click this to <a href="./logout.php">log out</a></p>
+            <a href="./new-article.php">add article</a>
+        <?php else:?>
+            <p>you are not log in now, click this to <a href="./login.php">log in</a></p>
+        <?php endif;?>
+        
         <h1>articles</h1>
         <?php 
             if (empty($articles)): 
