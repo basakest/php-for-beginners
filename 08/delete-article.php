@@ -1,45 +1,34 @@
 <?php
+require("./classes/Database.php");
+require("./classes/Article.php");
+require("./includes/url.php");
 $id = $_GET["id"];
 if (isset($id)) {
     if ($_SERVER["REQUEST_METHOD"] == "POST") {
-        require("./includes/database.php");
-        require("./includes/url.php");
-        require("./includes/article.php");
-        $dbc = getDB();
-        $article = getArticle($id, $dbc, "id");
-        if (isset($article)) {
-            $sql = "delete from article where id = ?";
-            $stmt = mysqli_prepare($dbc, $sql);
-            if ($stmt === false) {
-                echo mysqli_error($dbc);
-                exit();
-            } else {
-                mysqli_stmt_bind_param($stmt, "i", $id);
-                if (mysqli_stmt_execute($stmt)) {
-                    redirect("08/index.php");
-                } else {
-                    echo mysqli_stmt_error($stmt);
-                    exit();
-                }
-            }
-        } else {
-            die("there is no article with this id");
+        $db = new Database();
+        $dbc = $db->getConn();
+        $article = Article::getById($id, $dbc, "id");
+        //var_dump($article); false
+        if ($article->delete($dbc)) {
+            redirect("08/index.php");
         }
+
         
+        
+   
+        
+      
     } else {
         require("./includes/header.php");
     ?>
         <h2>delete</h2>
         <form method="post">
             <button>delete</button>
-            <a href="./article.php?id=<?=$id;?>">cancel</a>
+            <a href="./article.php?id=<?=$article->id;?>">cancel</a>
         </form>
     <?php
         require("./includes/footer.php");
     }
-    
-        
-    
-} else {
+}else {
     die("there is no id");
 }

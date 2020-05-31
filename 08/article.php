@@ -1,18 +1,21 @@
 <?php
-    require("./includes/database.php");
-    require("./includes/article.php");
+    require("./classes/Database.php");
+    require("./classes/Article.php");
     $id = $_GET["id"];
     if (isset($id)) {
-        $dbc = getDB();
-        $article = getArticle($id, $dbc);
+        $db = new Database();
+        $dbc = $db->getConn();
+        $article = Article::getById($id, $dbc);
+        //var_dump($article);
+        //exit();
     } else {
         $article = null;
-    }
-    
+    }   
 ?>
 <?php require('./includes/header.php'); ?>
         <h1>articles</h1>
         <?php 
+            //var_dump($article); false
             if (empty($article)): 
                 echo '<p>no article found</p>';
             else:
@@ -20,8 +23,8 @@
         <ul>
         
             <li>
-                <h2><?= htmlspecialchars($article['title']) ; ?></h2>
-                <p><?= htmlspecialchars($article['content']) ; ?></p>
+                <h2><?= htmlspecialchars($article->title) ; ?></h2>
+                <p><?= htmlspecialchars($article->content) ; ?></p>
             </li>
        
         </ul>

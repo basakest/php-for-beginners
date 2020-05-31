@@ -1,16 +1,12 @@
 <?php
     session_start();
-    require('./includes/database.php');
+    require('./classes/Database.php');
     require("./includes/auth.php");
-    $dbc = getDB();
-    $sql = "select * from article;";
-    if (($result = mysqli_query($dbc, $sql)) === false) {
-        echo mysqli_error($dbc);
-    } else {
-        $articles = mysqli_fetch_all($result, MYSQLI_ASSOC);
-        //var_dump($result);
-        //var_dump($articles);
-    } 
+    require("./classes/Article.php");
+    $db = new Database();
+    $dbc = $db->getConn();
+    $articles = Article::getAll($dbc);
+     
 ?>
 <?php require('./includes/header.php'); ?>
         <?php if (isLoggedIn()):?>
