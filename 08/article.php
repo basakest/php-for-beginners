@@ -1,10 +1,8 @@
 <?php
-    require("./classes/Database.php");
-    require("./classes/Article.php");
+    require './includes/init.php';
     $id = $_GET["id"];
     if (isset($id)) {
-        $db = new Database();
-        $dbc = $db->getConn();
+        $dbc = require './includes/db.php';
         $article = Article::getById($id, $dbc);
         //var_dump($article);
         //exit();

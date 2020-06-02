@@ -1,6 +1,5 @@
 <?php
-require("./includes/url.php");
-session_start();
+require './includes/init.php';
 $_SESSION = [];
 if (ini_get("session.use_cookies")) {
     $params = session_get_cookie_params();
@@ -10,4 +9,4 @@ if (ini_get("session.use_cookies")) {
     );
 }
 session_destroy();
-redirect("08/index.php");
+Url::redirect("08/index.php");

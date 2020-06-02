@@ -1,23 +1,14 @@
 <?php
-require("./classes/Database.php");
-require("./classes/Article.php");
-require("./includes/url.php");
+require './includes/init.php';
 $id = $_GET["id"];
 if (isset($id)) {
     if ($_SERVER["REQUEST_METHOD"] == "POST") {
-        $db = new Database();
-        $dbc = $db->getConn();
+        $dbc = require './includes/db.php';
         $article = Article::getById($id, $dbc, "id");
         //var_dump($article); false
         if ($article->delete($dbc)) {
-            redirect("08/index.php");
+            Url::redirect("08/index.php");
         }
-
-        
-        
-   
-        
-      
     } else {
         require("./includes/header.php");
     ?>

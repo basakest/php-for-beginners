@@ -2,11 +2,35 @@
 <html lang="en">
     <head>
         <meta charset="utf-8" />
-        <title>the title</title>
+        <meta name="keywords" content="keyword1, keyword2, keyword3" />
+        <meta name="description" content="this is the description about the page" />
+        <meta name="copyright" content="copyright name" />  
+        <title>the title of page</title>
+        <style type="text/css">
+            body {
+                margin: 0 auto;
+                background-color: grey;
+            }
+            a:link,
+            a:visited,
+            a:hover,
+            a:active {
+                text-decoration: none;
+                color: aqua;
+            }
+            ul {
+                list-style-type: none;
+            }
+        </style>
+        <script type="text/javascript">
+            window.onload = function() {
+                alert(document.getElementById("test").innerText);
+            }
+        </script>
     </head>
     <body>
         <header>
-            <h1>this is the h1 tag</h1>
+            <h1 id="test">this is the h1 tag</h1>
         </header>
         <nav>
             <a href="./page2.html" title="click it to page 2">go to page2</a>

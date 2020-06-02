@@ -1,14 +1,14 @@
 <?php
-require("./includes/url.php");
-session_start();
+require './includes/init.php';
 
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
+    $dbc = require './includes/db.php';
     $username = $_POST["username"];
     $password = $_POST["password"];
-    if ($username == "pan" && $password == "pan") {
+    if (User::authenticate($dbc, $username, $password)) {
         session_regenerate_id(true);
         $_SESSION["has_login"] = true;
-        redirect("08/index.php");
+        Url::redirect("08/index.php");
     } else {
         $error = "username or password is wrong";
     }
