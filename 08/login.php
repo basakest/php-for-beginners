@@ -6,8 +6,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $username = $_POST["username"];
     $password = $_POST["password"];
     if (User::authenticate($dbc, $username, $password)) {
-        session_regenerate_id(true);
-        $_SESSION["has_login"] = true;
+        Auth::logIn();
         Url::redirect("08/index.php");
     } else {
         $error = "username or password is wrong";

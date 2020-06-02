@@ -1,8 +1,9 @@
 <?php
-    require './includes/init.php';
+    require '../includes/init.php';
+    Auth::requireLogIn();
     $id = $_GET["id"];
     if (isset($id)) {
-        $dbc = require './includes/db.php';
+        $dbc = require '../includes/db.php';
         $article = Article::getById($id, $dbc);
         //var_dump($article);
         if (!$article) {
@@ -16,11 +17,11 @@
         $article->content = $_POST["content"];
         $article->published_at = empty($_POST["published_at"])?null:$_POST["published_at"];
         if ($article->update($dbc)) {
-            Url::redirect("08/article?id=$article->id");
+            Url::redirect("/08/admin/article?id=$article->id");
             exit();
         }
         
     }
     require("./includes/article-form.php");
-    require("./includes/footer.php");
+    require("../includes/footer.php");
 ?>
