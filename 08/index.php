@@ -1,7 +1,8 @@
 <?php
     require './includes/init.php';
     $dbc = require './includes/db.php';
-    $articles = Article::getAll($dbc);
+    $paginator = new Paginator($_GET['page'] ?? 1, 4, Article::getTotal($dbc));
+    $articles = Article::getPage($dbc, $paginator->limit, $paginator->offset);
      
 ?>
 <?php require('./includes/header.php'); ?>
@@ -22,4 +23,5 @@
         <?php endforeach; ?>
         </ul>
         <?php endif; ?>
+<?php require './includes/pagination.php';?>
 <?php require('./includes/footer.php'); ?> 

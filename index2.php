@@ -1,3 +1,11 @@
+<?php
+ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
+     echo "接受POST数据<br />";
+     foreach($_POST as $i => $v) {
+         echo $i . '的值为' . $v . '<br />';
+     }
+ }
+?>
 <!DOCTYPE html>
 <html lang="en">
     <head>
@@ -6,29 +14,10 @@
         <meta name="description" content="this is the description about the page" />
         <meta name="copyright" content="copyright name" />  
         <title>the title of page</title>
-        <style type="text/css">
-            body {
-                margin: 0 auto;
-                background-color: grey;
-            }
-            a:link,
-            a:visited,
-            a:hover,
-            a:active {
-                text-decoration: none;
-                color: aqua;
-            }
-            ul {
-                list-style-type: none;
-            }
-        </style>
-        <script type="text/javascript">
-            window.onload = function() {
-                alert(document.getElementById("test").innerText);
-            }
-        </script>
+        
     </head>
     <body>
+        <!--
         <header>
             <h1 id="test">this is the h1 tag</h1>
         </header>
@@ -55,5 +44,11 @@
                 <img src="./images/image1.jpg" alt="the alt text" />
             </aside>
         </main>
+    -->
+        <form action="" method="post">
+            用户名：<input type="text" name="username" id=""><br />
+            密码：<input type="password" name="password" id="" required><br />
+            <button>提交</button>
+        </form>
     </body>
 </html>

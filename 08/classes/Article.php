@@ -34,6 +34,7 @@ class Article
      * @var array
      */
     public $errors = [];
+
     /**
      * get all articles
      *
@@ -45,6 +46,23 @@ class Article
         $result = $dbc->query($sql);
         $articles = $result->fetchAll(PDO::FETCH_ASSOC);
         return $articles;
+    }
+
+    /**
+     * get article by the arguments
+     *
+     * @param [object] $dbc
+     * @param [int] $offset
+     * @param [int] $limit
+     * @return [array]
+     */
+    public static function getPage($dbc, $limit, $offset) {
+        $sql = "select * from article order by id limit :limit offset :offset";
+        $stmt = $dbc->prepare($sql);
+        $stmt->bindValue(":limit", $limit, PDO::PARAM_INT);
+        $stmt->bindValue(":offset", $offset, PDO::PARAM_INT);
+        $stmt->execute();
+        return $stmt->fetchAll(PDO::FETCH_ASSOC);
     }
 
     /**
@@ -147,5 +165,15 @@ class Article
         } else {
             return false;
         }
+    }
+
+    /**
+     * get the num of articles
+     *
+     * @param [object] $dbc
+     * @return [int]
+     */
+    public static function getTotal($dbc) {
+        return $dbc->query("select count(*) from article")->fetchColumn();
     }
 }

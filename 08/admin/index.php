@@ -2,7 +2,8 @@
     require '../includes/init.php';
     Auth::requireLogIn();
     $dbc = require '../includes/db.php';
-    $articles = Article::getAll($dbc);
+    $paginator = new Paginator($_GET['page'] ?? 1, 6, Article::getTotal($dbc));
+    $articles = Article::getPage($dbc, $paginator->limit, $paginator->offset)
 ?>
 <?php require('../includes/header.php'); ?>       
         <h1>Administration</h1>
@@ -23,4 +24,5 @@
         <?php endforeach; ?>
         </table>
         <?php endif; ?>
+<?php require('../includes/pagination.php');?>
 <?php require('../includes/footer.php'); ?> 
