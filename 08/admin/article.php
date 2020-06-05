@@ -23,11 +23,15 @@
         
             <li>
                 <h2><?= htmlspecialchars($article->title) ; ?></h2>
+                <?php if (isset($article->image_file)): ?>
+                <img src="/08/uploades/<?=$article->image_file;?>" alt="article image" />
+                <?php endif;?>
                 <p><?= htmlspecialchars($article->content) ; ?></p>
             </li>
        
         </ul>
         <a href="./edit-article.php?id=<?=$id;?>">edit article</a>
         <a href="./delete-article.php?id=<?=$id;?>">delete article</a>
+        <a href="./edit-article-image.php?id=<?=$id;?>">edit article image</a>
         <?php endif; ?>
  <?php require('../includes/footer.php'); ?>       

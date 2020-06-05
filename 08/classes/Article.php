@@ -34,6 +34,12 @@ class Article
      * @var array
      */
     public $errors = [];
+    /**
+     * the path of article image
+     *
+     * @var [string]
+     */
+    public $image_file;
 
     /**
      * get all articles
@@ -175,5 +181,19 @@ class Article
      */
     public static function getTotal($dbc) {
         return $dbc->query("select count(*) from article")->fetchColumn();
+    }
+
+    /**
+     * set the image file of an article
+     *
+     * @param [object] $dbc
+     * @return [boolean]
+     */
+    public function setImageFile($dbc) {
+        $sql = "update article set image_file = :image_file where id = :id";
+        $stmt = $dbc->prepare($sql);
+        $stmt->bindValue(":image_file", $this->image_file, isset($this->image_file)?PDO::PARAM_STR:PDO::PARAM_NULL);
+        $stmt->bindValue(":id", $this->id, PDO::PARAM_INT);
+        return $stmt->execute();
     }
 }

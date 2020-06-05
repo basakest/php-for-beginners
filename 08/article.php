@@ -22,6 +22,9 @@
         
             <li>
                 <h2><?= htmlspecialchars($article->title) ; ?></h2>
+                <?php if (isset($article->image_file)): ?>
+                <img src="/08/uploades/<?=$article->image_file;?>" alt="article image" />
+                <?php endif;?>
                 <p><?= htmlspecialchars($article->content) ; ?></p>
             </li>
        
