@@ -14,13 +14,11 @@
     </div>
     <div>
         <label for="content">content</label>
-        <textarea name="content" id="content" cols="30" rows="10">
-            <?= htmlspecialchars($article->content) ;?>
-        </textarea>
+        <textarea name="content" id="content" cols="30" rows="10"><?= htmlspecialchars($article->content);?></textarea>
     </div>
     <div>
         <label for="published_at">Publication date and time</label>
-        <input type="datetime-local" name="published_at" id="published_at" value="<?= $article->published_at;?>" />
+        <input type="text" name="published_at" id="published_at" value="<?= $article->published_at;?>" />
     </div>
     <fieldset>
         <legend>category</legend>

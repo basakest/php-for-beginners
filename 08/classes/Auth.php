@@ -20,7 +20,7 @@ class Auth
      */
     public static function requireLogIn() {
         if (!Auth::isLoggedIn()) {
-            die("<a href='./login.php'>log in </a>to see this page");
+            die("<a href='../login.php'>log in </a>to see this page");
         }
     }
 

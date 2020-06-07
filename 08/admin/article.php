@@ -23,6 +23,7 @@
         <ul>
             <li>
                 <h2><?= htmlspecialchars($article[0]['title']) ; ?></h2>
+                <time><?php echo $article[0]["published_at"] ?? "unpublished" ?></time>
                 <?php if (isset($article[0]['category_name'])): ?>
                     <p>Category:
                     <?php foreach($article as $v):?>

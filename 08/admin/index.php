@@ -14,11 +14,21 @@
             else:
         ?>
         <table>
-            <thead>Title</thead>
+            <thead>
+                <th>Title</th>
+                <th>Published date</th>
+            </thead>
         <?php foreach($articles as $article): ?>
             <tr>
                 <td>
                     <a href="./article.php?id=<?= $article['id']?>"><?= htmlspecialchars($article['title']) ; ?></a>
+                </td>
+                <td>
+                    <?php if (!empty($article["published_at"])):?>
+                        <time><?=$article["published_at"];?></time>
+                    <?php else: echo "unpublished";?>
+                    <button class="publish" data-id="<?=$article['id'];?>">publish</button>
+                    <?php endif;?>
                 </td>
             </tr>
         <?php endforeach; ?>

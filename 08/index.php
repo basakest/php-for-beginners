@@ -1,8 +1,8 @@
 <?php
     require './includes/init.php';
     $dbc = require './includes/db.php';
-    $paginator = new Paginator($_GET['page'] ?? 1, 4, Article::getTotal($dbc));
-    $articles = Article::getPage($dbc, $paginator->limit, $paginator->offset);
+    $paginator = new Paginator($_GET['page'] ?? 1, 4, Article::getTotal($dbc, true));
+    $articles = Article::getPage($dbc, $paginator->limit, $paginator->offset, true);
     //var_dump($articles);exit();
 ?>
 <?php require('./includes/header.php'); ?>
@@ -17,6 +17,10 @@
         <?php foreach($articles as $article): ?>
             <li>
                 <a href="./article.php?id=<?= $article['id']?>"><h2><?= htmlspecialchars($article['title']) ; ?></h2></a>
+                <time datetime="<?=$article['published_at'];?>">
+                    <?php $datetime = new DateTime($article['published_at']);
+                    echo $datetime->format("j F, Y");?>
+                </time>
                 <?php if ($article['category_names']):?>
                     <p>Category:
                         <?php foreach ($article['category_names'] as $v):?>

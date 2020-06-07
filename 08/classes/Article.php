@@ -59,15 +59,18 @@ class Article
      *
      * @param [object] $dbc
      * @param [int] $id
-     * @return [array]
+     * @return array
      */
-    public static function getWithCategory($dbc, $id) {
+    public static function getWithCategory($dbc, $id, $only_published = false) {
         $sql = "select article.*, category.name as category_name from article 
                 left join article_category 
                 on article.id = article_category.article_id
                 left join category
                 on category.id = article_category.category_id
                 where article.id = :id";
+        if ($only_published) {
+            $sql .= " and article.published_at is not null";
+        }
         $stmt = $dbc->prepare($sql);
         $stmt->bindValue(":id", $id, PDO::PARAM_INT);
         $stmt->execute();
@@ -129,11 +132,12 @@ class Article
      * @param [object] $dbc
      * @param [int] $offset
      * @param [int] $limit
-     * @return [array]
+     * @return array
      */
-    public static function getPage($dbc, $limit, $offset) {
+    public static function getPage($dbc, $limit, $offset, $only_published = false) {
+        $condition = $only_published? " where article.published_at is not null " :'';
         $sql = "select a.*,category.name as category_name from
-                (select * from article order by id limit :limit offset :offset) as a 
+                (select * from article $condition order by id limit :limit offset :offset) as a 
                 left join article_category on article_category.article_id = a.id
                 left join category on article_category.category_id = category.id";
         $stmt = $dbc->prepare($sql);
@@ -178,7 +182,7 @@ class Article
      * update the article
      *
      * @param [project] $dbc
-     * @return [boolean] the result of sql
+     * @return boolean the result of sql
      */
     public function update($dbc) {
         if ($this->validate()) {
@@ -214,7 +218,7 @@ class Article
         }
         if (isset($this->published_at)) {
             var_dump($this->published_at);
-            $this->published_at = date_create_from_format("Y-m-d H:i", $this->published_at);
+            $this->published_at = date_create_from_format("Y-m-d H:i:s", $this->published_at);
             var_dump($this->published_at);
             exit();
             if ($this->published_at === false) {
@@ -263,10 +267,12 @@ class Article
      * get the num of articles
      *
      * @param [object] $dbc
+     * @param [boolean] $is_published
      * @return [int]
      */
-    public static function getTotal($dbc) {
-        return $dbc->query("select count(*) from article")->fetchColumn();
+    public static function getTotal($dbc, $is_published = false) {
+        $condition = $is_published? " where article.published_at is not null " : "";
+        return $dbc->query("select count(*) from article $condition")->fetchColumn();
     }
 
     /**
@@ -281,5 +287,22 @@ class Article
         $stmt->bindValue(":image_file", $this->image_file, isset($this->image_file)?PDO::PARAM_STR:PDO::PARAM_NULL);
         $stmt->bindValue(":id", $this->id, PDO::PARAM_INT);
         return $stmt->execute();
+    }
+
+    /**
+     * publish an article
+     *
+     * @param [object] $dbc
+     * @return [string] the published datetime
+     */
+    public function publish($dbc) {
+        $sql = "update article set published_at = :published_at where id = :id";
+        $stmt = $dbc->prepare($sql);
+        $stmt->bindValue("id", $this->id, PDO::PARAM_INT);
+        $published_at = date("Y-m-d H:i:s");
+        $stmt->bindValue(":published_at", $published_at, PDO::PARAM_STR);
+        if ($stmt->execute()) {
+            return $published_at;
+        }
     }
 }

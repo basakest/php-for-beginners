@@ -26,3 +26,16 @@ $("#formArticle").validate({
         }
     }
 });
+
+$("button.publish").on("click", function(e) {
+    let id = $(this).data("id");
+    let button = $(this);
+    $.ajax({
+        url: '/08/admin/publish_article.php',
+        type: 'POST',
+        data: {id: id}
+    })
+    .done(function(data) {
+        button.parent().html(data);
+    })
+});

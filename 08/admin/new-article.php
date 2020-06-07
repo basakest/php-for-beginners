@@ -8,6 +8,7 @@
     //var_dump($category_ids);
     //exit();
     if ($_SERVER["REQUEST_METHOD"] == "POST") {
+        //var_dump($_POST["published_at"]);exit();
         $article = new Article();
         $article->title = $_POST["title"];
         $article->content = $_POST["content"];

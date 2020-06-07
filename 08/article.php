@@ -3,7 +3,7 @@
     $id = $_GET["id"];
     if (isset($id)) {
         $dbc = require './includes/db.php';
-        $article = Article::getWithCategory($dbc, $id);
+        $article = Article::getWithCategory($dbc, $id, true);
         //var_dump($article);
         //exit();
     } else {
@@ -22,6 +22,10 @@
         
             <li>
                 <h2><?= htmlspecialchars($article[0]["title"]) ; ?></h2>
+                <time datetime="<?=$article[0]['published_at'];?>">
+                    <?php $datetime = new DateTime($article[0]['published_at']);
+                    echo $datetime->format("j F, Y");?>
+                </time>
                 <?php if (isset($article[0]['category_name'])): ?>
                     <p>Category:
                     <?php foreach($article as $v):?>
