@@ -8,7 +8,6 @@
 <?php require('./includes/header.php'); ?>
         
         <h1>articles</h1>
-        <a href="./new-article.php">add article</a>
         <?php 
             if (empty($articles)): 
                 echo '<p>there is no articles now</p>';

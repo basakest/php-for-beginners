@@ -5,6 +5,8 @@
     $article = new Article();
     $categories = Category::getAll($dbc);
     $category_ids = array_column($article->getCategories($dbc), 'id');
+    //var_dump($category_ids);
+    //exit();
     if ($_SERVER["REQUEST_METHOD"] == "POST") {
         $article = new Article();
         $article->title = $_POST["title"];
@@ -15,7 +17,9 @@
             $id = $article->create($dbc);
             if ($id) {
                 $article->id = $id;
-                $article->setCategories($dbc, $category_ids);
+                if (!empty($category_ids)) {
+                    $article->setCategories($dbc, $category_ids);
+                }
                 URL::redirect("/08/article.php?id=$id");
             }
         }

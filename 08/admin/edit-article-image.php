@@ -82,7 +82,7 @@
     </div>
     <?php if (isset($article->image_file)): ?>
     <img src="/08/uploades/<?=$article->image_file;?>" alt="article image" /><br />
-    <a href="./delete-article-image?id=<?=$article->id;?>">delete</a>
+    <a class="delete" href="./delete-article-image?id=<?=$article->id;?>">delete</a>
     <?php endif;?>
     <button>Submit</button>
 </form>

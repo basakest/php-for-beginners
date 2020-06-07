@@ -38,7 +38,7 @@
        
         </ul>
         <a href="./edit-article.php?id=<?=$id;?>">edit article</a>
-        <a href="./delete-article.php?id=<?=$id;?>">delete article</a>
+        <a class="delete" href="./delete-article.php?id=<?=$id;?>">delete article</a>
         <a href="./edit-article-image.php?id=<?=$id;?>">edit article image</a>
         <?php endif; ?>
  <?php require('../includes/footer.php'); ?>       

@@ -1,4 +1,4 @@
-<form method="post">
+<form method="post" id="formArticle">
     <h1>My blog</h1>
     <h2>New article</h2>
     <?php if(!empty($article->errors)):?>
