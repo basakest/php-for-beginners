@@ -55,6 +55,75 @@ class Article
     }
 
     /**
+     * get an article and its category base on the id
+     *
+     * @param [object] $dbc
+     * @param [int] $id
+     * @return [array]
+     */
+    public static function getWithCategory($dbc, $id) {
+        $sql = "select article.*, category.name as category_name from article 
+                left join article_category 
+                on article.id = article_category.article_id
+                left join category
+                on category.id = article_category.category_id
+                where article.id = :id";
+        $stmt = $dbc->prepare($sql);
+        $stmt->bindValue(":id", $id, PDO::PARAM_INT);
+        $stmt->execute();
+        return $stmt->fetchAll(PDO::FETCH_ASSOC);
+    }
+
+    /**
+     * get the category about an article base on the id
+     *
+     * @param [object] $dbc
+     * @return array
+     */
+    public function getCategories($dbc) {
+        $sql = "select category.* from category 
+                left join article_category
+                on category.id = article_category.category_id
+                where article_category.article_id = :id";
+        $stmt = $dbc->prepare($sql);
+        $stmt->bindValue(":id", $this->id, PDO::PARAM_INT);
+        $stmt->execute();
+        return $stmt->fetchAll(PDO::FETCH_ASSOC);
+    }
+
+    /**
+     * update the category when upadte article
+     *
+     * @param [object] $dbc
+     * @param [array] $ids
+     * @return void
+     */
+    public function setCategories($dbc, $ids) {
+        $sql = "insert ignore into article_category(article_id, category_id) values ";
+        $values = [];
+        foreach ($ids as $id) {
+            $values[] = "({$this->id}, ?)";
+        }
+        $sql .= implode(", ", $values);
+        //var_dump($sql, $this->id);exit();
+        $stmt = $dbc->prepare($sql);
+        foreach($ids as $i => $id) {
+            $stmt->bindValue($i + 1, $id, PDO::PARAM_INT); 
+        }
+        $stmt->execute();
+        $sql = "delete from article_category where article_id = {$this->id} ";
+        if ($ids) {
+            $placeholders = array_fill(0, count($ids), '?');
+            $sql .= "and category_id not in (" . implode(', ', $placeholders) . ')';
+        }
+        $stmt = $dbc->prepare($sql);
+        foreach($ids as $i => $id) {
+            $stmt->bindValue($i + 1, $id, PDO::PARAM_INT);
+        }
+        $stmt->execute();
+    }
+
+    /**
      * get article by the arguments
      *
      * @param [object] $dbc
@@ -63,12 +132,29 @@ class Article
      * @return [array]
      */
     public static function getPage($dbc, $limit, $offset) {
-        $sql = "select * from article order by id limit :limit offset :offset";
+        $sql = "select a.*,category.name as category_name from
+                (select * from article order by id limit :limit offset :offset) as a 
+                left join article_category on article_category.article_id = a.id
+                left join category on article_category.category_id = category.id";
         $stmt = $dbc->prepare($sql);
         $stmt->bindValue(":limit", $limit, PDO::PARAM_INT);
         $stmt->bindValue(":offset", $offset, PDO::PARAM_INT);
         $stmt->execute();
-        return $stmt->fetchAll(PDO::FETCH_ASSOC);
+        $results = $stmt->fetchAll(PDO::FETCH_ASSOC);
+        $previous_id = null;
+        $articles = [];
+        // the purpose of this foreach: get an array about the article include the category
+        // foreach the array, one article may occur more than once
+        foreach($results as $row) { 
+            $article_id = $row["id"];
+            if ($article_id != $previous_id) {
+                $row["category_names"] = [];
+                $articles[$article_id] = $row;
+            }
+            $articles[$article_id]["category_names"][] = $row["category_name"];
+            $previous_id = $article_id;
+        }
+        return $articles;
     }
 
     /**

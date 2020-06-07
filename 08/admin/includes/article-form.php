@@ -22,5 +22,18 @@
         <label for="published_at">Publication date and time</label>
         <input type="datetime-local" name="published_at" id="published_at" value="<?= $article->published_at;?>" />
     </div>
+    <fieldset>
+        <legend>category</legend>
+        <?php foreach($categories as $category):?>
+            <div>
+            <input type="checkbox" name="category[]" id="" value="<?=$category['id']?>"
+                id="<?=$categories['id']?>" <?php 
+                if(in_array($category['id'], $category_ids)):?> checked
+                <?php endif;?> />
+            <label for="<?=$categories['id']?>"><?=$category['name']?></label>
+            </div>
+        <?php endforeach;?>
+        
+    </fieldset>
     <button>Add</button>
 </form>

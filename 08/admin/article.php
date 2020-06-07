@@ -4,7 +4,8 @@
     $id = $_GET["id"];
     if (isset($id)) {
         $dbc = require '../includes/db.php';
-        $article = Article::getById($id, $dbc);
+        //var_dump($dbc);exit();
+        $article = Article::getWithCategory($dbc, $id);
         //var_dump($article);
         //exit();
     } else {
@@ -20,13 +21,19 @@
             else:
         ?>
         <ul>
-        
             <li>
-                <h2><?= htmlspecialchars($article->title) ; ?></h2>
-                <?php if (isset($article->image_file)): ?>
-                <img src="/08/uploades/<?=$article->image_file;?>" alt="article image" />
+                <h2><?= htmlspecialchars($article[0]['title']) ; ?></h2>
+                <?php if (isset($article[0]['category_name'])): ?>
+                    <p>Category:
+                    <?php foreach($article as $v):?>
+                        <?=htmlspecialchars($v['category_name']);?>
+                    <?php endforeach;?>
+                    </p>
                 <?php endif;?>
-                <p><?= htmlspecialchars($article->content) ; ?></p>
+                <?php if (isset($article[0]['image_file'])): ?>
+                <img src="/08/uploades/<?=$article[0]['image_file'];?>" alt="article image" />
+                <?php endif;?>
+                <p><?= htmlspecialchars($article[0]['content']) ; ?></p>
             </li>
        
         </ul>
