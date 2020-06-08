@@ -13,8 +13,8 @@
                 echo '<p>there is no articles now</p>';
             else:
         ?>
-        <table>
-            <thead>
+        <table class="table table-striped table-bordered table-hover">
+            <thead class="thead-light">
                 <th>Title</th>
                 <th>Published date</th>
             </thead>
@@ -27,7 +27,7 @@
                     <?php if (!empty($article["published_at"])):?>
                         <time><?=$article["published_at"];?></time>
                     <?php else: echo "unpublished";?>
-                    <button class="publish" data-id="<?=$article['id'];?>">publish</button>
+                    <button class="publish btn btn-primary" data-id="<?=$article['id'];?>">publish</button>
                     <?php endif;?>
                 </td>
             </tr>

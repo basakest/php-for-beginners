@@ -1,5 +1,6 @@
 <?php
     require '../includes/init.php';
+    require '../includes/header.php';
     $dbc = require '../includes/db.php';
     Auth::requireLogIn();
     $article = new Article();

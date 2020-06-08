@@ -13,9 +13,9 @@
                 echo '<p>there is no articles now</p>';
             else:
         ?>
-        <ul>
+        <ul class="list-group">
         <?php foreach($articles as $article): ?>
-            <li>
+            <li class="list-group-item">
                 <a href="./article.php?id=<?= $article['id']?>"><h2><?= htmlspecialchars($article['title']) ; ?></h2></a>
                 <time datetime="<?=$article['published_at'];?>">
                     <?php $datetime = new DateTime($article['published_at']);

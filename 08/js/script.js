@@ -37,5 +37,9 @@ $("button.publish").on("click", function(e) {
     })
     .done(function(data) {
         button.parent().html(data);
-    })
+    });
+});
+
+$("#published_at").datetimepicker({
+    format: "Y-m-d H:i:s"
 });
