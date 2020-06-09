@@ -22,14 +22,15 @@
     </div>
     <fieldset>
         <legend>category</legend>
+        
         <?php foreach($categories as $category):?>
             <div class="form-check form-check-inline">
             <input type="checkbox" name="category[]" id="" value="<?=$category['id']?>"
-                id="<?=$categories['id']?>" <?php 
+                id="<?=$category['id']?>" <?php 
                 if(in_array($category['id'], $category_ids)):?> checked
                 <?php endif;?> class="form-check-input" />
-            <label for="<?=$categories['id']?>" class="form-check-label"><?=$category['name']?></label>
-            </div>
+            <label for="<?=$category['id'];?>" class="form-check-label"><?=$category['name'];?></label>
+            </div>  
         <?php endforeach;?>
         
     </fieldset>

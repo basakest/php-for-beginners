@@ -30,10 +30,10 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         try {
             $mail->isSMTP();
             //$mail->SMTPDebug = 2;
-            $mail->Host = "smtp.qq.com";
+            $mail->Host = EMAIL_HOST;
             $mail->SMTPAuth = true;
-            $mail->Username = "1652759879@qq.com";
-            $mail->Password = "remove it from here";
+            $mail->Username = EMAIL_USER;
+            $mail->Password = EMAIL_PWD;
             $mail->SMTPSecure = "ssl";
             $mail->Port = 465;
             $mail->CharSet = 'UTF-8';
