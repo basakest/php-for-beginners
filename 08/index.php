@@ -23,9 +23,13 @@
                 </time>
                 <?php if ($article['category_names']):?>
                     <p>Category:
+                        
                         <?php foreach ($article['category_names'] as $v):?>
+                            <span class="badge badge-dark mr-2">
                             <?=$v;?>
+                            </span>
                         <?php endforeach;?>
+                        
                     </p>
                 <?php endif;?>
                 <p><?= htmlspecialchars($article['content']); ?></p>

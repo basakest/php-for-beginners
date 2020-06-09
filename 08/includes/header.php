@@ -3,9 +3,9 @@
     <head>
         <meta charset="utf-8" />
         <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-        <title>title</title>
+        <title>cms</title>
         <link rel="stylesheet" href="/08/css/jquery.datetimepicker.min.css">
-        <link rel="stylesheet" href="/08/css/bootstrap.css">
+        <link rel="stylesheet" href="/08/css/bootstrap.min.css">
     </head>
     <body>
         <div class="container">
@@ -22,10 +22,14 @@
                         <li class="nav-item">
                             <a href="/08/admin/index.php" class="nav-link">admin</a>
                         </li>
+                        <li class="nav-item">
+                            <a href="/08/email.php" class="nav-link">contact</a>
+                        </li>
                     <?php else: ?>
                         <li class="nav-item">
                             <a href="/08/login.php" class="nav-link">log in</a>
                         </li>
                     <?php endif;?>
+                        
                 </ul>
             </nav>
