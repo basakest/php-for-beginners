@@ -19,7 +19,7 @@
                 if (!empty($category_ids)) {
                     $article->setCategories($dbc, $category_ids);
                 }
-                URL::redirect("/08/admin/article.php?id=$id");
+                Url::redirect("/08/admin/article.php?id=$id");
             }
         }
     }

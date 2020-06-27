@@ -11,16 +11,15 @@ if (isset($id)) {
             Url::redirect("/08/admin/index.php");
         }
     } else {
-        require("../includes/header.php");
-    ?>
-        <h2>delete</h2>
-        <form method="post">
-            <button>delete</button>
-            <a href="./article.php?id=<?=$article->id;?>">cancel</a>
-        </form>
-    <?php
+        require("../includes/header.php"); ?>
+<h2>delete</h2>
+<form method="post">
+  <button>delete</button>
+  <a href="./article.php?id=<?=$article->id; ?>">cancel</a>
+</form>
+<?php
         require("../includes/footer.php");
     }
-}else {
+} else {
     die("there is no id");
 }

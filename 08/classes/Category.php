@@ -5,12 +5,15 @@ class Category
      * get all categories
      *
      * @param [object] $dbc the connection of mysql
-     * @return [array]
+     * @return [array] the categories of article
      */
-    public static function getAll($dbc) {
+    public static function getAll($dbc)
+    {
         $sql = "select * from category;";
         $result = $dbc->query($sql);
         $articles = $result->fetchAll(PDO::FETCH_ASSOC);
         return $articles;
     }
+
+
 }

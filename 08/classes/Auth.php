@@ -9,7 +9,8 @@ class Auth
      *
      * @return boolean
      */
-    public static function isLoggedIn() {
+    public static function isLoggedIn()
+    {
         return isset($_SESSION["has_login"]) && $_SESSION["has_login"];
     }
 
@@ -18,7 +19,8 @@ class Auth
      *
      * @return void
      */
-    public static function requireLogIn() {
+    public static function requireLogIn()
+    {
         if (!Auth::isLoggedIn()) {
             die("<a href='../login.php'>log in </a>to see this page");
         }
@@ -29,7 +31,8 @@ class Auth
      *
      * @return void
      */
-    public static function logIn() {
+    public static function logIn()
+    {
         session_regenerate_id(true);
         $_SESSION["has_login"] = true;
     }
@@ -39,13 +42,19 @@ class Auth
      *
      * @return void
      */
-    public static function logOut() {
+    public static function logOut()
+    {
         $_SESSION = [];
         if (ini_get("session.use_cookies")) {
             $params = session_get_cookie_params();
-            setcookie(session_name(), '', time() - 42000,
-                $params["path"], $params["domain"],
-                $params["secure"], $params["httponly"]
+            setcookie(
+                session_name(),
+                '',
+                time() - 42000,
+                $params["path"],
+                $params["domain"],
+                $params["secure"],
+                $params["httponly"]
             );
         }
         session_destroy();

@@ -1,6 +1,7 @@
 <?php
 use PHPMailer\PHPMailer\PHPMailer;
 use PHPMailer\PHPMailer\Exception;
+
 require './includes/init.php';
 require './includes/header.php';
 require './vendor/PHPMailer/src/Exception.php';
@@ -46,37 +47,37 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             $mail->Body = $content;
             $mail->send();
             $sent = true;
-        } catch(Exception $e) {
+        } catch (Exception $e) {
             $errors[] = $mail->ErrorInfo;
         }
     }
 }
 ?>
 <h2>Contact</h2>
-<?php if($sent):?>
-    <p>Message sent.</p>
+<?php if ($sent):?>
+<p>Message sent.</p>
 <?php else:?>
-<?php if(!empty($errors)):?>
-    <div>
-        <?php foreach($errors as $error):?>
-            <p><?=$error;?></p>
-        <?php endforeach;?>
-    </div>
+<?php if (!empty($errors)):?>
+<div>
+  <?php foreach ($errors as $error):?>
+  <p><?=$error;?></p>
+  <?php endforeach;?>
+</div>
 <?php endif;?>
 <form method="post" id="email-form">
-    <div class="form-group">
-        <label for="email">Your email:</label>
-        <input type="email" name="email" id="email" class="form-control" value="<?=htmlspecialchars($email) ;?>">
-    </div>
-    <div class="form-group">
-        <label for="subject">Subject:</label>
-        <input type="text" name="subject" id="subject" class="form-control" value="<?=htmlspecialchars($subject);?>">
-    </div>
-    <div class="form-group">
-        <label for="content">Content:</label>
-        <textarea name="content" id="content" cols="30" rows="10" class="form-control"><?=htmlspecialchars($content);?></textarea>
-    </div>
-    <button class="btn btn-primary">submit</button>
+  <div class="form-group">
+    <label for="email">Your email:</label>
+    <input type="email" name="email" id="email" class="form-control" value="<?=htmlspecialchars($email) ;?>">
+  </div>
+  <div class="form-group">
+    <label for="subject">Subject:</label>
+    <input type="text" name="subject" id="subject" class="form-control" value="<?=htmlspecialchars($subject);?>">
+  </div>
+  <div class="form-group">
+    <label for="content">Content:</label>
+    <textarea name="content" id="content" cols="30" rows="10" class="form-control"><?=htmlspecialchars($content);?></textarea>
+  </div>
+  <button class="btn btn-primary">submit</button>
 </form>
 <?php endif;?>
 <?php

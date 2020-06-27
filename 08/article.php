@@ -22,10 +22,12 @@
         
             <li>
                 <h2><?= htmlspecialchars($article[0]["title"]) ; ?></h2>
+                <div>
                 <time datetime="<?=$article[0]['published_at'];?>">
                     <?php $datetime = new DateTime($article[0]['published_at']);
                     echo $datetime->format("j F, Y");?>
                 </time>
+                </div>
                 <?php if (isset($article[0]['category_name'])): ?>
                     <p>Category:
                     <?php foreach($article as $v):?>
@@ -34,7 +36,7 @@
                     </p>
                 <?php endif;?>
                 <?php if (isset($article[0]["image_file"])): ?>
-                <img src="/08/uploades/<?=$article[0]["image_file"];?>" alt="article image" />
+                    <img src="/08/uploades/<?=$article[0]["image_file"];?>" alt="article image" />
                 <?php endif;?>
                 <p><?= htmlspecialchars($article[0]["content"]) ; ?></p>
             </li>

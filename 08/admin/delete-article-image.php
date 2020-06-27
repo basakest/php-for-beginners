@@ -22,7 +22,7 @@
         $article->image_file = null;
         if ($article->setImageFile($dbc)) {
             Url::redirect("/08/admin/article.php?id=$article->id");
-        }  
+        }
     }
 ?>
 <h2>delete article image</h2>

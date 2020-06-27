@@ -20,4 +20,5 @@ class Url
         header("Location: $url");
         exit();
     }
+    
 }

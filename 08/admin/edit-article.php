@@ -1,4 +1,4 @@
-<?php 
+<?php
     require '../includes/init.php';
     require '../includes/header.php';
     Auth::requireLogIn();
@@ -19,13 +19,14 @@
         $article->content = $_POST["content"];
         $article->published_at = empty($_POST["published_at"])?null:$_POST["published_at"];
         $category_ids = $_POST["category"] ?? [];
-    
+        //var_dump($article);exit();
+        //var_dump($article->update($dbc));exit();
         if ($article->update($dbc)) {
+            //echo 123;exit();
             $article->setCategories($dbc, $category_ids);
-            Url::redirect("/08/admin/article?id=$article->id");
+            Url::redirect("/08/admin/article.php?id=$article->id");
             exit();
-        }  
+        }
     }
     require("./includes/article-form.php");
     require("../includes/footer.php");
-?>
